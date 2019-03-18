@@ -49,8 +49,18 @@ This is the hw03 sample. Please follow the steps below.
 
 --------------------
 
-- [x] **If you volunteer to give the presentation next week, check this.**
+- [] **If you volunteer to give the presentation next week, check this.**
 
 --------------------
 
 **★★★ Please take your note here ★★★**
+The ARM calling convention mandates using a full-descending stack.[1]
+
+This calling convention causes a "typical" ARM subroutine to
+
+    In the prologue, push r4 to r11 to the stack, and push the return address in r14, to the stack. (This can be done with a single STM instruction).
+    copy any passed arguments (in r0 to r3) to the local scratch registers (r4 to r11).
+    allocate other local variables to the remaining local scratch registers (r4 to r11).
+    do calculations and call other subroutines as necessary using BL, assuming r0 to r3, r12 and r14 will not be preserved.
+    put the result in r0
+    In the epilogue, pull r4 to r11 from the stack, and pull the return address to the program counter r15. (This can be done with a single LDM instruction).
